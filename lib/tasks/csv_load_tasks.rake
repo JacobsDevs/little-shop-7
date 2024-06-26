@@ -25,13 +25,14 @@ namespace :csv_load do
 	
 	desc "load all invoice_items from /db/data/invoice_items.csv"
 	task invoices: [:environment, :customers] do
+		statuses = ["in progress", "completed", "cancelled"]
 		csv = CSV.parse(File.read("db/data/invoices.csv"), headers: true)
 		if csv.size != Invoice.count
 			csv.each do |invoice|
 				if Invoice.all.empty? || Invoice.where(id: invoice['id']).empty?
 					Invoice.create!(
 						customer_id: invoice['customer_id'],
-						status: invoice['status'],
+						status: statuses.index(invoice['status']),
 						created_at: invoice['created_at'],
 						updated_at: invoice['updated_at'])
 				end
@@ -93,6 +94,7 @@ namespace :csv_load do
 
 	desc "load all invoice_items from /db/data/invoice_items.csv"
 	task invoices_items: [:environment, :invoices, :items] do
+		statuses = ["pending", "packaged", "shipped"]
 		csv = CSV.parse(File.read("db/data/invoice_items.csv"), headers: true)
 		if csv.size != InvoicesItem.count
 			csv.each do |invoice_item|
@@ -102,7 +104,7 @@ namespace :csv_load do
 						invoice_id: invoice_item['invoice_id'],
 						quantity: invoice_item['quantity'],
 						unit_price: invoice_item['unit_price'],
-						status: invoice_item['status'],
+						status: statuses.index(invoice_item['status']),
 						created_at: invoice_item['created_at'],
 						updated_at: invoice_item['updated_at']
 						)

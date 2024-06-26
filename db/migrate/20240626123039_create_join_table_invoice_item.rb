@@ -5,7 +5,7 @@ class CreateJoinTableInvoiceItem < ActiveRecord::Migration[7.1]
       # t.index [:item_id, :invoice_id]
 			t.string :quantity
 			t.integer :unit_price
-			t.string :status
+			t.integer :status
 
 			t.timestamps
     end
