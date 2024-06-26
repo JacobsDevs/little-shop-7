@@ -75,6 +75,7 @@ namespace :csv_load do
 
 	desc "load all invoice_items from /db/data/invoice_items.csv"
 	task transactions: [:environment, :invoices] do
+		results = ["failed", "success"]
 		csv = CSV.parse(File.read("db/data/transactions.csv"), headers: true)
 		if csv.size != Transaction.count
 			csv.each do |transaction|
@@ -83,7 +84,7 @@ namespace :csv_load do
 						invoice_id: transaction['invoice_id'],
 						credit_card_number: transaction['credit_card_number'],
 						credit_card_expiration_date: transaction['credit_card_expiration_date'],
-						result: transaction['result'],
+						result: results.index(transaction['result']),
 						created_at: transaction['created_at'],
 						updated_at: transaction['updated_at']
 						)
