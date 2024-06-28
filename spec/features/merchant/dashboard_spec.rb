@@ -22,7 +22,8 @@ RSpec.describe 'Merchant Dashboard' do
 		top_five = Customer.build_top_five_customers_hash(1)
 		
 		visit "/merchants/1/dashboard"
-
+		save_and_open_page
+		
 		expect(page).to have_content("#{top_five.keys[0]} - #{top_five.values[0]} purchase")
 		expect(page).to have_content("#{top_five.keys[1]} - #{top_five.values[1]} purchase")
 		expect(page).to have_content("#{top_five.keys[2]} - #{top_five.values[2]} purchase")
