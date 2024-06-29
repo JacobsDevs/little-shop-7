@@ -14,8 +14,8 @@ class Customer < ApplicationRecord
 		top_five_customer_records = Customer.get_most_transactions(merchant_id)
 		top_customer_names_array = top_five_customer_records.map {|c| "#{c.first_name} #{c.last_name}"}
 		successful_transactions = get_customers_successful_transactions(top_five_customer_records, merchant_id)
-		top_five_customers = top_customer_names_array.zip(successful_transactions).to_h
-		return top_five_customers
+		top_customer_names_array.zip(successful_transactions).to_h
+
 	end
 
 	def self.get_customers_successful_transactions(customer_records, merchant_id)

@@ -7,7 +7,6 @@ RSpec.describe Merchant, type: :model do
 
 	describe 'methods' do
 		it 'can #get_best_customers' do
-			require 'pry'; binding.pry
 		end
 	end
 end
