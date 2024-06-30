@@ -10,6 +10,6 @@
 	<% end %></p>
 <% end %>
 <h1>Items to Ship</h1>
-<% @items_to_ship.each do |item| %>
-	<p><%= link_to "Invoice ##{item.invoice_id}",  merchant_invoice_path(@merchant, Invoice.find(item.invoice_id))%> <%= " - #{item.quantity} x #{Item.find(item.item_id).name}" %></p>
-<% end %>
+<ul><% @items_to_ship.each do |item| %>
+	<p><%= link_to "Invoice ##{item.invoice_id}",  merchant_invoice_path(@merchant, item.invoice)%> <%= " - #{item.quantity} x #{item.item.name} - #{item.invoice.created_at.strftime("%A, %B %d, %Y")}" %></p>
+<% end %></ul>
