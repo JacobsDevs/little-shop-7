@@ -6,7 +6,6 @@ RSpec.describe Merchant, type: :model do
 	end
 
 	describe 'methods' do
-		it 'can #get_best_customers' do
-		end
+		
 	end
 end
