@@ -1,10 +1,15 @@
 <%= @merchant.name %>
 <%= link_to 'My Items', merchant_items_path(@merchant) %>
 <%= link_to 'My Invoices', merchant_invoices_path(@merchant) %>
+<h1>Top 5 Customers</h1>
 <% @top_five_hash.each do |entry| %>
 	<p><% if entry[1] > 1 %>
 		<%= "#{entry[0]} - #{entry[1]} purchases" %>
 	<% else %>
 		<%= "#{entry[0]} - #{entry[1]} purchase" %>
 	<% end %></p>
+<% end %>
+<h1>Items to Ship</h1>
+<% @items_to_ship.each do |item| %>
+	<p><%= link_to "Invoice ##{item.invoice_id}",  merchant_invoice_path(@merchant, Invoice.find(item.invoice_id))%> <%= " - #{item.quantity} x #{Item.find(item.item_id).name}" %></p>
 <% end %>
