@@ -28,10 +28,29 @@ RSpec.describe 'Merchant Items page' do
 			item = Item.all.first
 
 			visit "/merchants/#{item.merchant.id}/items/#{item.id}"
-			
+
 			expect(page).to have_content("Name: #{item.name}")
 			expect(page).to have_content("Description: #{item.description}")
 			expect(page).to have_content("Price: #{item.unit_price}")
+		end
+		it  'can update items' do
+			item = Item.all.first
+
+			visit "/merchants/#{item.merchant.id}/items/#{item.id}"
+			
+			click_link "Update Item"
+			
+			expect(page).to have_field('Name', with: "#{item.name}")
+			expect(page).to have_field('Description', with: "#{item.description}")
+			expect(page).to have_field('Unit price', with: "#{item.unit_price}")
+			
+			fill_in 'Name', with: "Cheetos"
+			click_button "Save Item"
+			save_and_open_page
+
+			expect(Item.all.first.name).to eq("Cheetos")
+			expect(current_path).to have_content("/merchants/#{item.merchant.id}/items/#{item.id}")
+			expect(page).to have_content("Updated Successfully")
 		end
 	end
 end
