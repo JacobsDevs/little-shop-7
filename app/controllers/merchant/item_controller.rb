@@ -21,11 +21,7 @@ class Merchant::ItemController < ApplicationController
 
   def change_status
     item = Item.find(params[:format])
-    if item.enabled?
-      item.update!(status: :disabled)
-    else
-      item.update!(status: :enabled)
-    end
+    item.change_status
     redirect_to merchant_items_path(item.merchant)
   end
 
