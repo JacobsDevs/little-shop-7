@@ -1,12 +1,24 @@
 <h1>Items</h1>
+<h2>Enabled Items</h2>
 <ul>
 	<% @merchant.items.order(:id).each do |item| %>
-		<li><%= link_to item.name, merchant_item_path(@merchant, item) %> - <i><%= item.status.titleize %></i>
 		<% if item.enabled? %>
-			<%= button_to "Disable Item", change_status_merchant_items_path(@merchant, item), method: :get%>
-		<% else %>
-			<%= button_to "Enable Item", change_status_merchant_items_path(@merchant, item), method: :get%>
-		<% end %> 
-		</li>
+			<li>
+				<%= link_to item.name, merchant_item_path(@merchant, item) %> - <i><%= item.status.titleize %></i>
+				<%= button_to "Disable Item", change_status_merchant_items_path(@merchant, item), method: :get%>
+			</li>
+		<% end %>
+	<% end %>
+
+</ul>
+<h2>Disabled Items</h2>
+<ul>
+	<% @merchant.items.order(:id).each do |item| %>
+		<% if item.disabled? %>
+			<li>
+				<%= link_to item.name, merchant_item_path(@merchant, item) %> - <i><%= item.status.titleize %></i>
+				<%= button_to "Enable Item", change_status_merchant_items_path(@merchant, item), method: :get%>
+			</li>
+		<% end %>
 	<% end %>
 </ul>

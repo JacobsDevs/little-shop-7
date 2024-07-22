@@ -22,29 +22,33 @@ RSpec.describe 'Merchant Items page' do
 			click_link "#{merchant.items.first.name}"
 			expect(current_path).to eq("/merchants/#{merchant.id}/items/#{merchant.items.first.id}")
 		end
-    it 'can enable/disable items' do
+    it 'can enable/disable items and put them in the Enabled and Disabled items list' do
       merchant = Merchant.first
       
       visit "/merchants/#{merchant.id}/items"
-      
-      within first('li') do |node|
-        expect(node).to have_content('Esse')
-        expect(find('i')).to have_content('Enabled')
-        click_button "Disable Item"
+      within first('ul') do
+        within first('li') do |node|
+          expect(node).to have_content('Esse')
+          expect(find('i')).to have_content('Enabled')
+          click_button "Disable Item"
+        end
       end
-
-      within first('li') do |node|
-        expect(node).to have_content('Esse')
-        expect(find('i')).to have_content('Disabled')
-        click_button "Enable Item"
+      within all('ul').last do
+        within first('li') do |node|
+          expect(node).to have_content('Esse')
+          expect(find('i')).to have_content('Disabled')
+          click_button "Enable Item"
+        end
       end
-
-      within first('li') do |node|
-        expect(node).to have_content('Esse')
-        expect(find('i')).to have_content('Enabled')
+      within first('ul') do
+        within first('li') do |node|
+          expect(node).to have_content('Esse')
+          expect(find('i')).to have_content('Enabled')
+        end
       end
     end
 	end
+
 	describe 'Merchant Items Show' do
 		it 'Has all the item attributes' do	
 			item = Item.all.first
