@@ -1,0 +1,15 @@
+
+[1mFrom:[0m /home/thegypsy/turing/2module/projects/little-shop-7/spec/features/merchant/items_spec.rb:30 :
+
+    [1;34m25[0m:     it [31m[1;31m'[0m[31mcan enable/disable items[1;31m'[0m[31m[0m [32mdo[0m
+    [1;34m26[0m:       merchant = [1;34;4mMerchant[0m.first
+    [1;34m27[0m: 
+    [1;34m28[0m:       visit [31m[1;31m"[0m[31m/merchants/#{merchant.id}[0m[31m/items[1;31m"[0m[31m[0m
+    [1;34m29[0m:       within first([31m[1;31m'[0m[31mli[1;31m'[0m[31m[0m) [32mdo[0m
+ => [1;34m30[0m:         require [31m[1;31m'[0m[31mpry[1;31m'[0m[31m[0m; binding.pry
+    [1;34m31[0m:       [32mend[0m
+    [1;34m32[0m: 
+    [1;34m33[0m:       expect(page)
+    [1;34m34[0m:     [32mend[0m
+    [1;34m35[0m: 	[32mend[0m
+

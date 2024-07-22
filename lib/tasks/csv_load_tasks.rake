@@ -50,7 +50,8 @@ namespace :csv_load do
 		if csv.size != Item.count
 			csv.each do |item|
 				if Item.all.empty? || Item.where(id: item['id']).empty?
-					Item.create!(
+          merchant = Merchant.find(item['merchant_id'])
+          merchant.items.create!(
 						id: item['id'],
 						name: item['name'],
 						description: item['description'],

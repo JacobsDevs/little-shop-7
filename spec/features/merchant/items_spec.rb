@@ -5,11 +5,11 @@ RSpec.describe 'Merchant Items page' do
 		it 'Has just that Merchant\'s Items' do
 			merchant = Merchant.find(1)
 			items = merchant.items
-			
-			visit "merchants/#{merchant.id}/items"
+
+      visit "merchants/#{merchant.id}/items"
 			
 			items.each do |item|
-				expect(page).to have_content(item.name)
+        expect(page).to have_content(item.name)
 			end
 			
 			expect(page).to_not have_content(Item.find(16).name)
@@ -22,6 +22,28 @@ RSpec.describe 'Merchant Items page' do
 			click_link "#{merchant.items.first.name}"
 			expect(current_path).to eq("/merchants/#{merchant.id}/items/#{merchant.items.first.id}")
 		end
+    it 'can enable/disable items' do
+      merchant = Merchant.first
+      
+      visit "/merchants/#{merchant.id}/items"
+      
+      within first('li') do |node|
+        expect(node).to have_content('Esse')
+        expect(find('i')).to have_content('Enabled')
+        click_button "Disable Item"
+      end
+
+      within first('li') do |node|
+        expect(node).to have_content('Esse')
+        expect(find('i')).to have_content('Disabled')
+        click_button "Enable Item"
+      end
+
+      within first('li') do |node|
+        expect(node).to have_content('Esse')
+        expect(find('i')).to have_content('Enabled')
+      end
+    end
 	end
 	describe 'Merchant Items Show' do
 		it 'Has all the item attributes' do	
@@ -46,7 +68,6 @@ RSpec.describe 'Merchant Items page' do
 			
 			fill_in 'Name', with: "Cheetos"
 			click_button "Save Item"
-			save_and_open_page
 
 			expect(Item.all.first.name).to eq("Cheetos")
 			expect(current_path).to have_content("/merchants/#{item.merchant.id}/items/#{item.id}")

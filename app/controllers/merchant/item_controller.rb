@@ -19,6 +19,16 @@ class Merchant::ItemController < ApplicationController
 		redirect_to merchant_item_path(item.merchant, item), notice: "Updated Successfully"
 	end
 
+  def change_status
+    item = Item.find(params[:format])
+    if item.enabled?
+      item.update!(status: :disabled)
+    else
+      item.update!(status: :enabled)
+    end
+    redirect_to merchant_items_path(item.merchant)
+  end
+
 private
 	def item_params
 		params.permit(:name, :description, :unit_price)
