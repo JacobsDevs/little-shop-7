@@ -26,13 +26,6 @@ RSpec.describe 'Merchant Items page' do
       merchant = Merchant.first
       
       visit "/merchants/#{merchant.id}/items"
-      within first('ul') do
-        within first('li') do |node|
-          expect(node).to have_content('Esse')
-          expect(find('i')).to have_content('Enabled')
-          click_button "Disable Item"
-        end
-      end
       within all('ul').last do
         within first('li') do |node|
           expect(node).to have_content('Esse')
@@ -44,6 +37,13 @@ RSpec.describe 'Merchant Items page' do
         within first('li') do |node|
           expect(node).to have_content('Esse')
           expect(find('i')).to have_content('Enabled')
+          click_button "Disable Item"
+        end
+      end
+      within all('ul').last do
+        within first('li') do |node|
+          expect(node).to have_content('Esse')
+          expect(find('i')).to have_content('Disabled')
         end
       end
     end
@@ -71,11 +71,32 @@ RSpec.describe 'Merchant Items page' do
 			expect(page).to have_field('Unit price', with: "#{item.unit_price}")
 			
 			fill_in 'Name', with: "Cheetos"
-			click_button "Save Item"
+
+      click_button "Save Item"
 
 			expect(Item.all.first.name).to eq("Cheetos")
 			expect(current_path).to have_content("/merchants/#{item.merchant.id}/items/#{item.id}")
 			expect(page).to have_content("Updated Successfully")
 		end
 	end
+
+  describe 'Merchant Items New' do
+    it 'can create a new Item' do
+      merchant = Merchant.create!(name: "Alonzee")
+      
+      visit "/merchants/#{merchant.id}/items"
+
+      click_link "New Item"
+      fill_in 'Name', with: "Cheetos"
+      fill_in 'Description', with: "A lovely snack"
+      fill_in 'Unit price', with: 1093
+
+      click_button "Submit"
+
+      expect(current_path).to have_content("/merchants/#{merchant.id}/items")
+      within all('ul').last do
+        expect(page).to have_content('Cheetos - Disabled')
+      end
+    end
+  end
 end

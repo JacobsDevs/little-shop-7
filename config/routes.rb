@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
 	resources :merchants, controller: 'merchant' do
-		resources :items, only: [:index, :show, :edit, :update], controller: 'merchant/item' do
+		resources :items, only: [:create, :new, :index, :show, :edit, :update], controller: 'merchant/item' do
       collection do
         get :change_status
       end
