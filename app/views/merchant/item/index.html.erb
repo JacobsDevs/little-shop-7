@@ -23,3 +23,13 @@
 		<% end %>
 	<% end %>
 </ul>
+
+<h2>Top 5 Selling Items</h2>
+<ol type='1' id='top_5'>
+	<% @top_5_items.each do |item| %>
+		<li>
+			<p><%= "#{item.name} - #{item.get_item_revenue_formatted} in sales" %></p>
+			<p><%= "Top day was #{item.get_best_day[0]} with #{item.get_best_day[1]} in sales." %></p>
+		</li>
+	<% end %>
+</ol>

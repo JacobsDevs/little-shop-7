@@ -7,4 +7,8 @@ class InvoicesItem < ApplicationRecord
 		InvoicesItem.joins(item: :merchant).joins(:invoice)
 		.where("invoices_items.status" => "packaged", "merchants.id" => merchant_id)
 	end
+
+  def get_create_date
+    created_at.strftime("%D")
+  end
 end

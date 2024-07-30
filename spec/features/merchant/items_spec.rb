@@ -47,6 +47,18 @@ RSpec.describe 'Merchant Items page' do
         end
       end
     end
+    it 'has 5 most popular items' do
+      merchant = Merchant.first
+
+      visit "/merchants/#{merchant.id}/items"
+
+      within first('#top_5') do
+        within first('li') do |node|
+          expect(node).to have_content('Voluptatem Sint')
+          expect(node).to have_content('$891,810.00')
+        end
+      end
+    end
 	end
 
 	describe 'Merchant Items Show' do

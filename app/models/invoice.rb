@@ -11,4 +11,12 @@ class Invoice < ApplicationRecord
 		.distinct
 		.count
 	end
+
+  def is_successful?
+    if transactions.where("result" => "success").count > 0
+      return true
+    else
+      return false
+    end
+  end
 end
